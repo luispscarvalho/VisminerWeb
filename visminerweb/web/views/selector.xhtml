@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+	<p:growl id="messages" showDetail="true" />
+	<p:toolbar>
+		<f:facet name="left">
+			<p:commandButton id="projectsBtn" value="Projects" type="button" />
+			<p:overlayPanel id="projectsPanel" for="projectsBtn"
+				hideEffect="fade" dynamic="true" style="width:700px">
+				<p:dataTable var="repo" value="#{selector.repositories}" rows="5"
+					paginator="true">
+					<p:column headerText="Project" width="40%">
+						<p:commandLink id="uidcl" ajax="false">
+							<h:outputText value="#{repo.name}" />
+							<f:setPropertyActionListener target="#{selector.repository}"
+								value="#{repo}">
+							</f:setPropertyActionListener>
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Description" width="60%">
+						<h:outputText value="#{repo.description}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:overlayPanel>
+			<span class="ui-separator"> <span
+				class="ui-icon ui-icon-grip-dotted-vertical" />
+			</span>
+			<p:commandButton id="treeBtn" value="Tree" type="button" />
+			<p:overlayPanel id="treePanel" for="treeBtn" hideEffect="fade"
+				dynamic="true" style="width:700px">
+				<p:tree value="#{selector.treeNodes}" var="node" dynamic="true"
+					cache="true" animate="true" orientation="horizontal">
+					<p:treeNode>
+						<p:commandLink id="unitcl" ajax="false">
+							<h:outputText value="#{node}" />
+							<f:setPropertyActionListener target="#{selector.currentTree}"
+								value="#{node}">
+							</f:setPropertyActionListener>
+						</p:commandLink>
+					</p:treeNode>
+				</p:tree>
+			</p:overlayPanel>
+		</f:facet>
+	</p:toolbar>
+</h:body>
+</html>

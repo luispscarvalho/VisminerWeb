@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+<script src="visjs/vis.js"></script>
+<link href="visjs/vis.css" rel="stylesheet" type="text/css" />
+</head>
+<h:body>
+	<p:panel id="committers"
+		header="Viewing info from: #{selector.repository.name}"
+		toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500"
+		rendered="#{selector.repository != null}">
+		<h:panelGrid columns="2" cellpadding="2">
+			<h:panelGroup style="display: inline-table; width: 10%; float: left;">
+				<p:panelGrid columns="2">
+					<h:outputText value="ID: " />
+					<h:outputText value="#{selector.repository.id}" />
+					<h:outputText value="Name: " />
+					<h:outputText value="#{selector.repository.name}" />
+					<h:outputText value="Description: " />
+					<h:outputText value="#{selector.repository.description}" />
+					<h:outputText value="Path: " />
+					<h:outputText value="#{selector.repository.path}" />
+				</p:panelGrid>
+			</h:panelGroup>
+			<h:panelGroup style="display: inline-table; width: 90%; float: right;">
+				<p:dataTable var="committer" value="#{selector.repository.committers}"
+					paginator="true" rows="6">
+					<f:facet name="header">Committers</f:facet>
+					<p:column headerText="Id" style="width:10%">
+						<h:outputText value="#{committer.id}" />
+					</p:column>
+					<p:column headerText="Name" style="width:50%">
+						<h:outputText value="#{committer.name}" />
+					</p:column>
+					<p:column headerText="Email" style="width:40%">
+						<h:outputText value="#{committer.email}" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+		</h:panelGrid>
+	</p:panel>
+</h:body>
+</html>
