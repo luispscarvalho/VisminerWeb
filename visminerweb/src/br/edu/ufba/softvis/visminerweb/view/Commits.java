@@ -23,10 +23,10 @@ import br.edu.ufba.softvis.visminerweb.beans.Unit;
 
 @ManagedBean(name = "commits")
 @ViewScoped
-public class CommitsView {
+public class Commits {
 
 	@ManagedProperty(value = "#{selector}")
-	private SelectorView selectorView;
+	private Selector selector;
 
 	private int commitsCount = 0, commitId = -1;
 	private Map<Integer, Commit> commitsMap = new TreeMap<Integer, Commit>();
@@ -36,12 +36,12 @@ public class CommitsView {
 
 	private AffectedFile selectedFile;
 
-	public SelectorView getSelectorView() {
-		return selectorView;
+	public Selector getSelector() {
+		return selector;
 	}
 
-	public void setSelectorView(SelectorView selectorView) {
-		this.selectorView = selectorView;
+	public void setSelector(Selector selector) {
+		this.selector = selector;
 	}
 
 	private List<Commit> getCommits(Tree tree) {
@@ -65,7 +65,7 @@ public class CommitsView {
 		data += "items.add([";
 
 		commitsCount = 1;
-		List<Commit> commits = getCommits(selectorView.getCurrentTree());
+		List<Commit> commits = getCommits(selector.getCurrentTree());
 		for (Commit commit : commits) {
 			Date commitDate = commit.getDate();
 

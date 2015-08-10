@@ -17,7 +17,7 @@ import br.edu.ufba.softvis.visminer.retriever.RetrieverFactory;
 
 @ManagedBean(name = "selector")
 @ViewScoped
-public class SelectorView {
+public class Selector {
 
 	private Repository repository;
 	private List<Repository> repositories = new ArrayList<Repository>();
