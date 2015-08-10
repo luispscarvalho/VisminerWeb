@@ -3,6 +3,9 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/web" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="visminer_pull.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/visminer_pull/visminer_pull">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="visminerweb"/>
         <property name="java-output-path" value="/visminerweb/build/classes"/>
     </wb-module>
