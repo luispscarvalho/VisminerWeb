@@ -14,18 +14,16 @@
 				<p:dataTable var="repo" value="#{selector.repositories}" rows="5"
 					paginator="true">
 					<p:column headerText="Project" width="40%">
-						<p:commandLink id="uidcl" ajax="false">
+						<p:commandLink id="uidcl" ajax="false" >
 							<h:outputText value="#{repo.name}" />
 							<f:setPropertyActionListener target="#{selector.repository}"
 								value="#{repo}">
 							</f:setPropertyActionListener>
 						</p:commandLink>
 					</p:column>
-
 					<p:column headerText="Description" width="60%">
 						<h:outputText value="#{repo.description}" />
 					</p:column>
-
 				</p:dataTable>
 			</p:overlayPanel>
 			<span class="ui-separator"> <span
