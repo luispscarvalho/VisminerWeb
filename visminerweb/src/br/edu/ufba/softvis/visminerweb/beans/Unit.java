@@ -23,10 +23,14 @@ public class Unit {
 
 		metrics = "";
 		Map<MetricUid, String> ms = softwareUnit.getMetricValues();
-		for (MetricUid uid : ms.keySet()) {
-			metrics += (metrics.equals("") ? "" : ", ") + uid.name() + " = "
-					+ ms.get(uid);
-		}
+
+			for (MetricUid uid : ms.keySet()) {
+				if (uid == null) {
+					continue;
+				}
+				metrics += (metrics.equals("") ? "" : ", ") + uid.name()
+						+ " = " + ms.get(uid);
+			}
 	}
 
 	public String getUid() {
