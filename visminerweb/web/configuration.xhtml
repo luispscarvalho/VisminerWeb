@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>Visminer Web</title>
+	<script name="jquery/jquery.js" library="primefaces" />
+
+	<link rel="StyleSheet" type="text/css" href="resources/visminerweb.css" />
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:wizard>
+			<p:tab id="dbdriver" title="Driver">
+				<p:panel header="Choose a driver">
+					<p:messages />
+					<h:panelGrid columns="1" columnClasses="label, value">
+						<h:outputText value="Driver:" />
+						<p:selectOneMenu id="driver" value="#{configurator.driver}"
+							converter="driverConverter" required="true">
+							<f:selectItem itemLabel="Choose a driver" itemValue="" />
+							<f:selectItems value="#{configurator.drivers}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="dburl" title="URL">
+				<p:panel header="Set the URL">
+					<p:messages />
+					<h:panelGrid columns="2" columnClasses="label, value">
+						<h:outputText value="URL:" />
+						<p:inputText id="url" value="#{configurator.url}"
+							style="width:450px" required="true" />
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="dbcredentials" title="Credentials">
+				<p:panel header="Set the credentials">
+					<p:messages />
+					<h:panelGrid columns="2" columnClasses="label, value">
+						<h:outputText value="User: " />
+						<p:inputText value="#{configurator.user}" style="width:250px"
+							required="true" />
+
+						<h:outputText value="Password: " />
+						<p:password value="#{configurator.password}" style="width:250px"
+							required="true" />
+					</h:panelGrid>
+				</p:panel>
+			</p:tab>
+
+			<p:tab id="save" title="Save">
+				<p:panel header="Save the configuration">
+					<p:messages showDetail="true" autoUpdate="true" />
+					<p:panelGrid columns="2" celspacing="4">
+						<h:outputText value="Driver: " />
+						<h:outputText value="#{configurator.driver}" />
+
+						<h:outputText value="URL: " />
+						<h:outputText value="#{configurator.url}" />
+
+						<h:outputText value="User: " />
+						<h:outputText value="#{configurator.user}" />
+					</p:panelGrid>
+					<div style="text-align: left">
+						<br />
+						<p:commandButton value="Test"
+							actionListener="#{configurator.testConnection}" ajax="false" />
+						<p:spacer height="10px" width="7px" />
+						<p:commandButton value="Save"
+							actionListener="#{configurator.saveConfiguration}" ajax="false" />
+						<p:spacer height="10px" width="7px" />
+						<p:commandButton value="Goto Visminer"
+							action="main.softvis?faces-redirect=true" ajax="false" />
+					</div>
+				</p:panel>
+			</p:tab>
+		</p:wizard>
+	</h:form>
+</h:body>
+</html>
