@@ -7,25 +7,9 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
 <script src="visjs/vis.js"></script>
+<script type="text/javascript" src="js/visminer.js"></script>
+
 <link href="visjs/vis.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript">
-	function getWidth() {
-		if (self.innerHeight) {
-			return self.innerWidth;
-		}
-		if (document.documentElement <![CDATA[Tabs && Panels]]> document.documentElement.clientHeight) {
-			return document.documentElement.clientWidth;
-		}
-		if (document.body) {
-			return document.body.clientWidth;
-		}
-	}
-
-	function setCommitId(id) {
-		document.getElementById('form:commitId').value = id;
-	}
-</script>
 </head>
 <h:body>
 	<p:panel id="commits"
