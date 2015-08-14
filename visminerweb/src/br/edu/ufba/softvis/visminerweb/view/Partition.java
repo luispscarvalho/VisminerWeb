@@ -1,5 +1,6 @@
 package br.edu.ufba.softvis.visminerweb.view;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -125,7 +126,7 @@ public class Partition {
 		} else if (month == 11) {
 			str = "December";
 		}
-		
+
 		return str;
 	}
 
@@ -165,6 +166,11 @@ public class Partition {
 	}
 
 	private void writeFile(String filePath, String content) throws Exception {
+		File f = new File(filePath);
+		if (f.exists()) {
+			f.delete();
+		}
+
 		byte dataToWrite[] = content.getBytes();
 		FileOutputStream out = new FileOutputStream(filePath);
 		out.write(dataToWrite);
