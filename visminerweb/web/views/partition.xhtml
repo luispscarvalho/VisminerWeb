@@ -127,13 +127,13 @@ text {
 		header="Viewing commits partitions from: #{selector.repository.name}::#{selector.selectedTree}"
 		toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500"
 		rendered="#{selector.selectedTree != null}">
-		<h:panelGrid columns="1" cellpadding="2">
+		<h:panelGrid columns="1">
 			<h:panelGroup
-				style="display: inline-table; width: 100%; float: center;">
+				style="width: 100%; float: center;">
 				<div id="partitionContainer" />
 				<script type="text/javascript">
 					var w = Math.floor(getWidth() * 0.96);
-					var h = 400, x = d3.scale.linear().range([ 0, w ]), y = d3.scale
+					var h = 500, x = d3.scale.linear().range([ 0, w ]), y = d3.scale
 							.linear().range([ 0, h ]);
 					var vis = d3.select("#partitionContainer").attr("class",
 							"chart").style("width", w + "px").style("height",
