@@ -44,7 +44,7 @@ public class Partition {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		String id = session.getId();
-		json = id + ".json";
+		json = id + "partition.json";
 
 		return json;
 	}
