@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html class="no-js" lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<head>
+</head>
+<h:body>
+	<p:panel id="details"
+		header="Viewing details from commit: #{selector.repository.name}::#{selector.selectedTree}::#{selector.selectedCommit.name}"
+		toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500"
+		rendered="#{selector.selectedCommit != null}">
+		<h:panelGrid columns="2">
+			<h:panelGroup style="display: inline-table; width: 20%; float: left;">
+				<p:panelGrid columns="2"
+					rendered="#{selector.selectedCommit != null}">
+					<h:outputText value="ID: " />
+					<h:outputText value="#{selector.selectedCommit.name}" />
+					<h:outputText value="Message: " />
+					<h:outputText value="#{selector.selectedCommit.message}" />
+					<h:outputText value="Committer: " />
+					<h:outputText value="#{selector.selectedCommit.committer.name}" />
+				</p:panelGrid>
+			</h:panelGroup>
+			<h:panelGroup
+				style="display: inline-table; width: 80%; float: right;">
+				<p:dataTable var="file" value="#{timeline.affectedFiles}"
+					paginator="true" rows="6">
+					<f:facet name="header">Affected files</f:facet>
+					<p:column headerText="Name" style="width:50%">
+						<p:commandLink update=":form:units"
+							oncomplete="PF('unitsDialog').show()" title="View units"
+							styleClass="ui-icon ui-icon-search"
+							style="float:left;margin-right:2px">
+							<f:setPropertyActionListener value="#{file}"
+								target="#{timeline.selectedFile}" />
+						</p:commandLink>
+						<h:outputText value="#{file.name}" />
+					</p:column>
+					<p:column headerText="Code churn" style="width:50%">
+						<h:outputText value="#{file.state}" />
+					</p:column>
+				</p:dataTable>
+				<p:dialog header="Software units" widgetVar="unitsDialog"
+					modal="true" showEffect="blind" hideEffect="explode"
+					resizable="false">
+					<p:outputPanel id="units" style="text-align:left;">
+						<p:dataTable var="swunit" value="#{timeline.softwareUnits}"
+							paginator="true" rows="6">
+							<f:facet name="header">Units</f:facet>
+							<p:column headerText="ID" style="width:30%">
+								<h:outputText value="#{swunit.uid}" />
+							</p:column>
+							<p:column headerText="Name" style="width:30%">
+								<h:outputText value="#{swunit.name}" />
+							</p:column>
+							<p:column headerText="Metrics" style="width:40%">
+								<h:outputText value="#{swunit.metrics}" />
+							</p:column>
+						</p:dataTable>
+					</p:outputPanel>
+				</p:dialog>
+			</h:panelGroup>
+		</h:panelGrid>
+	</p:panel>
+</h:body>
+</html>
