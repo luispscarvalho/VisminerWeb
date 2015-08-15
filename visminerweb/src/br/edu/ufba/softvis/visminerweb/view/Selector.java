@@ -75,13 +75,15 @@ public class Selector {
 
 	public void setSelectedTree(Tree tree) {
 		this.selectedTree = tree;
+
+		retrieveCommits();
 	}
 
 	public Tree getSelectedTree() {
 		return selectedTree;
 	}
 
-	public List<Commit> getCommits() {
+	private void retrieveCommits() {
 		List<Commit> commits = new ArrayList<Commit>();
 		commitsMap.clear();
 
@@ -94,8 +96,10 @@ public class Selector {
 				commitsMap.put(commit.getId(), commit);
 			}
 		}
+	}
 
-		return commits;
+	public List<Commit> getCommits() {
+		return new ArrayList<Commit>(commitsMap.values());
 	}
 
 	public Map<Integer, Commit> getCommitsMap() {
