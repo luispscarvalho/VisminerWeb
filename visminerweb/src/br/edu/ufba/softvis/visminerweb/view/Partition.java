@@ -1,7 +1,5 @@
 package br.edu.ufba.softvis.visminerweb.view;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -11,21 +9,17 @@ import java.util.TreeMap;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import br.edu.ufba.softvis.visminer.model.business.Commit;
 import br.edu.ufba.softvis.visminerweb.beans.partition.PartitionBranch;
 import br.edu.ufba.softvis.visminerweb.beans.partition.PartitionItem;
+import br.edu.ufba.softvis.visminerweb.util.FileUtils;
 
 import com.google.gson.Gson;
 
 @ManagedBean(name = "partition")
 @ViewScoped
 public class Partition {
-
-	private static final String TMP_PATH = "/tmp";
 
 	@ManagedProperty(value = "#{selector}")
 	private Selector selector;
@@ -36,32 +30,6 @@ public class Partition {
 
 	public void setSelector(Selector selector) {
 		this.selector = selector;
-	}
-
-	private String generateJSONFileName() {
-		String json = "";
-
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
-		String id = session.getId();
-		json = id + "partition.json";
-
-		return json;
-	}
-
-	private String getTmpPath() {
-		return FacesContext.getCurrentInstance().getExternalContext()
-				.getRealPath(TMP_PATH);
-	}
-
-	private String getContextPath() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest req = (HttpServletRequest) context
-				.getExternalContext().getRequest();
-		String url = req.getRequestURL().toString();
-		url = url.substring(0, url.lastIndexOf("/"));
-
-		return url;
 	}
 
 	private Map<Integer, Map<Integer, Map<Integer, Integer>>> getPartitionTree(
@@ -165,34 +133,23 @@ public class Partition {
 		return root;
 	}
 
-	private void writeFile(String filePath, String content) throws Exception {
-		File f = new File(filePath);
-		if (f.exists()) {
-			f.delete();
-		}
-
-		byte dataToWrite[] = content.getBytes();
-		FileOutputStream out = new FileOutputStream(filePath);
-		out.write(dataToWrite);
-		out.close();
-	}
-
 	public String getPartitionJSON() {
 		// creates a new JSON file in the TEMP directory
-		String jsonFile = generateJSONFileName();
-		String jsonPath = getTmpPath() + "/" + jsonFile;
+		String jsonFile = FileUtils.generateJSONFileName();
+		String jsonPath = FileUtils.getTempPath() + "/" + jsonFile;
 		// creates partition branches
 		PartitionBranch<?> partition = createPartition(selector.getCommits());
 		try {
 			Gson converter = new Gson();
 			String jsonContent = converter.toJson(partition);
 
-			writeFile(jsonPath, jsonContent);
+			FileUtils.writeFile(jsonPath, jsonContent);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		String url = "\"" + getContextPath() + "/tmp/" + jsonFile + "\"";
+		String url = "\"" + FileUtils.getContextPath() + FileUtils.TMP_PATH
+				+ "/" + jsonFile + "\"";
 
 		return url;
 	}
